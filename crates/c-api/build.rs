@@ -47,10 +47,10 @@ fn main() {
     let current_dir = env::current_dir().unwrap();
     println!("Current working directory: {}", current_dir.display());
 
-    // cmake.arg("-P").arg("cmake/install-headers.cmake");
+    cmake.arg("-P").arg("cmake/install-headerxs.cmake");
 
-    // let status = cmake.status().expect("failed to spawn `cmake`");
-    // assert!(status.success());
+    let status = cmake.status().expect("failed to spawn `cmake`");
+    assert!(status.success());
 
     println!("cargo:include={out_dir}/include");
 }
