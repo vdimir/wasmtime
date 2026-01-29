@@ -47,7 +47,15 @@ fn main() {
     let current_dir = env::current_dir().unwrap();
     println!("Current working directory: {}", current_dir.display());
 
-    cmake.arg("-P").arg("cmake/install-headerxs.cmake");
+    // recursively list current directory contents for debugging
+    let ls_output = Command::new("ls")
+        .arg("-R")
+        .arg(&current_dir)
+        .output()
+        .expect("failed to execute ls command");
+    println!("Directory contents:\n{}", String::from_utf8_lossy(&ls_output.stdout));
+
+    cmake.arg("-P").arg("cmake/install-headers.cmake");
 
     let status = cmake.status().expect("failed to spawn `cmake`");
     assert!(status.success());
